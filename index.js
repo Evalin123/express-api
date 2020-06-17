@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const keys = require('./config/keys');
+const users = require('./routes/api/users');
 
 const app = express();
 const port = 5000;
@@ -23,6 +24,8 @@ app.listen(port, () => {
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use('/api/users', users);
 
 app.get('/', (request, response) => {
   response.send('Hello');
