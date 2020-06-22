@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const cors = require('cors');
 
 const keys = require('./config/keys');
 const users = require('./routes/api/users');
@@ -10,6 +11,7 @@ const posts = require('./routes/api/posts');
 const app = express();
 const port = 5000;
 
+app.use(cors());
 mongoose.connect(keys.mongoUri, {
   useNewUrlParser: true
 })
