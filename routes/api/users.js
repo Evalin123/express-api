@@ -58,7 +58,7 @@ router.post('/login', (request, response) => {
             jwt.sign(rule, secret, {expiresIn:1800}, (err, token) => {
             response.json({
               status : 'success',
-              data : 'Bearer ' + token
+              token : 'Bearer ' + token
             })  
             });
           }else {
