@@ -62,11 +62,11 @@ router.post('/login', (request, response) => {
             })  
             });
           }else {
-            return response.status(400).json({msg: "incorrect password"});
+            return response.json({status: 'error', msg: "incorret password"});
           }
         })
     }else {
-      return response.status(400).json({msg: "no user"});
+      return response.json({status: 'error', msg: "no user"});
     }
   })
   .catch(err => response.json({status: 'error', data: err}));
