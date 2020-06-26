@@ -74,11 +74,12 @@ router.post('/login', (request, response) => {
 
 router.post('/edit/:id', passport.authenticate('jwt', {session:false}), (request, response) => {
   const id = request.params.id;
+  const name = request.body.name;
   const description = request.body.description;
   User.findOneAndUpdate({_id : id}, 
-    {$set : {description : description}}, 
+    {$set : {name : name, description : description}}, 
     {new : true})
-  .then(user => response.json(user))
+  .then(user => response.json({data : user, message : '已編輯'}))
   .catch(err => response.json({status: 'error', data: err}));
 });
 
