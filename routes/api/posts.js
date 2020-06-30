@@ -13,8 +13,8 @@ router.post('/create', passport.authenticate('jwt', {session:false}), (request, 
     content : request.body.content,
   });
   newPost.save()
-    .then(post => response.json(post))
-    .catch(err => response.json({status: 'error', data: err}));
+  .then(post => response.json({data : post, message : '已新增'}))
+  .catch(err => response.json({status: 'error', data: err}));
 });
 
 router.post('/edit/:id', passport.authenticate('jwt', {session:false}), (request, response) => {
@@ -25,7 +25,7 @@ router.post('/edit/:id', passport.authenticate('jwt', {session:false}), (request
   Post.findOneAndUpdate({_id : id}, 
     {$set : opts}, 
     {new : true})
-  .then(post => response.json(post))
+    .then(post => response.json({data : post, message : '已編輯'}))
   .catch(err => response.json({status: 'error', data: err}));
 });
 
