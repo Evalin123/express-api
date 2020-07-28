@@ -45,7 +45,7 @@ router.get('/', (request, response) => {
 router.delete('/delete/:id', passport.authenticate('jwt', {session:false}), (request, response) => {
   const id = request.params.id;
   Post.findOneAndDelete({_id : id})
-  .then(post => response.json(post))
+  .then(post => response.json({data : post, message : '已刪除'}))
   .catch(err => response.json({status: 'error', data: err}));
 });
 
