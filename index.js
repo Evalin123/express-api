@@ -31,6 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 require('./config/passport')(passport);
 
+app.use('/uploads',express.static('uploads'));
 app.use('/api/users', users);
 app.use('/api/posts', posts);
 

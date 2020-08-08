@@ -2,11 +2,23 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
+const multer = require('multer');
 
 const User = require('../../models/User');
 const secret = require('../../config/keys').secret;
 
 const router = express.Router();
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads')
+  },
+  filename: function (req, file, cb) {
+    let tmp = file.originalname.split('.')
+    const ext = tmp[tmp.length-1];
+    cb(null, Date.now() + '.' + ext)
+  }
+});
+const upload = multer({storage: storage})
 
 router.get('/', (request, response) => {
   User.find({}, (err, users) => {
@@ -92,6 +104,11 @@ router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), (
 
 router.get('/current', passport.authenticate('jwt', { session: false }), (request, response) => {
   response.json(request.user);
+});
+
+router.post('/uploadfile', upload.single('myfile'), function (req, res) {
+  console.log(res.file);
+  res.json(res.file)
 });
 
 module.exports = router;
